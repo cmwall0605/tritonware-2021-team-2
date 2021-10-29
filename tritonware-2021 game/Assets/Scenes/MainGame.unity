@@ -270,5 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1532590b0b6aae14daecca18f34eec72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 6826343168142163144, guid: 8dd732abc35699f48b62312fc060005e, type: 3}
+  tileLayouts:
+  - {fileID: 11400000, guid: 42f42c8d0cc7af34c8382c0fab9cfe27, type: 2}
   tileSetObject: {fileID: 221373455}

@@ -4,21 +4,13 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour {
 
-
-
-    // Start is called before the first frame update
-    void Start() {
-        
+    public TileData tileData {
+        get;
+        private set;
     }
 
-    // Update is called once per frame
-    void Update() {
-        
-    }
-}
+    public void InitTile(TileData _tileData) {
 
-public enum TileType { 
-    Empty,
-    Obstacle,
-    Target
+        tileData = _tileData;
+    }
 }
