@@ -16,3 +16,9 @@ public class Tile : MonoBehaviour {
         
     }
 }
+
+public enum TileType { 
+    Empty,
+    Obstacle,
+    Target
+}
