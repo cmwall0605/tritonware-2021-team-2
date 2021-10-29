@@ -9,8 +9,15 @@ public class Tile : MonoBehaviour {
         private set;
     }
 
-    public void InitTile(TileData _tileData) {
+    public Vector2 position
+    {
+        get;
+        private set;
+    }
+    public void InitTile(TileData _tileData, Vector2 _position) {
 
         tileData = _tileData;
+
+        position = _position;
     }
 }

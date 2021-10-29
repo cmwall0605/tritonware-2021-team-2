@@ -77,7 +77,7 @@ public class Map : MonoBehaviour {
         Vector3 objectPosition = new Vector3(position.x, 0, position.y);
         GameObject tileObejct = Instantiate(tile.prefab, objectPosition, 
             Quaternion.identity, tileSetObject.transform);
-        tileObejct.AddComponent<Tile>().InitTile(tile);
+        tileObejct.AddComponent<Tile>().InitTile(tile, position);
         return tileObejct.GetComponent<Tile>();
     }
 
