@@ -9,22 +9,25 @@ public class Map : MonoBehaviour {
 
     public TileData[] tileLayouts;
     public GameObject tileSetObject;
+    public GameObject player;
 
     public List<List<Tile>> grid {
         get;
         private set;
     }
 
-    public GameObject player {
+   /*public GameObject player {
         get;
         private set;
     }
+    */
     
     // Start is called before the first frame update
     void Start() {
-        player = GameObject.Find("Player");
+        //player = GameObject.Find("Player");
         grid = new List<List<Tile>>();
         CreateGrid(Random.Range(0, int.MaxValue));
+        Instantiate(player, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     private System.Random random;
@@ -88,6 +91,5 @@ public class Map : MonoBehaviour {
 
     // Run on end on coroutine
     void MovePlayerToStart(GameObject player) {
-    
     }
 }
