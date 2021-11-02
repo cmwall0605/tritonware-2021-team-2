@@ -7,11 +7,11 @@ public class Map : MonoBehaviour {
     public const int MAP_WIDTH = 10;
     public const int MAP_HEIGHT = 10;
 
-    public TileData[] tileLayouts;
-    public GameObject tileSetObject;
+    public SubsetData[] subsetLayouts;
+    public GameObject subsetSetObject;
     public GameObject player;
 
-    public List<List<Tile>> grid {
+    public Tile[][] grid {
         get;
         private set;
     }
@@ -24,64 +24,89 @@ public class Map : MonoBehaviour {
     
     // Start is called before the first frame update
     void Start() {
-        //player = GameObject.Find("Player");
-        grid = new List<List<Tile>>();
-        CreateGrid(Random.Range(0, int.MaxValue));
-        Instantiate(player, new Vector3(0, 0, 0), Quaternion.identity);
+        grid = new Tile[MAP_WIDTH * Subset.SIZE][];
+        for (int i = 0; i < MAP_WIDTH * Subset.SIZE; i++) {
+            grid[i] = new Tile[MAP_HEIGHT * Subset.SIZE];
+        } 
+        CreateSubsetGrid(Random.Range(0, int.MaxValue));
+        //Instantiate(player, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     private System.Random random;
 
-    void CreateGrid(int givenSeed) {
+    void CreateSubsetGrid(int givenSeed) {
 
         random = new System.Random(givenSeed);
 
-        List<TileData> spawnLayouts = new List<TileData>();
+        List<SubsetData> spawnLayouts = new List<SubsetData>();
 
-        List<TileData> emptyLayouts = new List<TileData>();
+        List<SubsetData> roadLayouts = new List<SubsetData>();
 
-        List<TileData> obstacleLayouts = new List<TileData>();
+        List<SubsetData> lotLayouts = new List<SubsetData>();
 
-        List<TileData> targetLayouts = new List<TileData>();
+        List<SubsetData> obstacleLayouts = new List<SubsetData>();
 
-        foreach (TileData tileData in tileLayouts) {
-            if (tileData.isSpawnLocal) spawnLayouts.Add(tileData);
+        List<SubsetData> targetLayouts = new List<SubsetData>();
 
-            switch (tileData.tileType) {
-                case TileType.Empty:
-                    emptyLayouts.Add(tileData);
+        foreach (SubsetData subsetData in subsetLayouts)
+        {
+            if (subsetData.isSpawnLocal) spawnLayouts.Add(subsetData);
+
+            switch (subsetData.subsetType)
+            {
+                case SubsetType.Road:
+                    roadLayouts.Add(subsetData);
                     break;
-                case TileType.Obstacle:
-                    obstacleLayouts.Add(tileData);
+                case SubsetType.Lot:
+                    lotLayouts.Add(subsetData);
                     break;
-                case TileType.Target:
-                    targetLayouts.Add(tileData);
+                case SubsetType.Obs:
+                    obstacleLayouts.Add(subsetData);
+                    break;
+                case SubsetType.Target:
+                    targetLayouts.Add(subsetData);
                     break;
             }
         }
 
-        for (int widthIndex = 0; widthIndex < MAP_HEIGHT; widthIndex++) {
-            List<Tile> currentColumnList = new List<Tile>();
-            grid.Add(currentColumnList);
-            currentColumnList.Add(CreateTile(
-                spawnLayouts[random.Next(0, spawnLayouts.Count)],
-                new Vector2(0, 0)));
-            for (int rowIndex = 0; rowIndex < MAP_HEIGHT; rowIndex++) {
-                if (widthIndex + rowIndex == 0) continue;
-                Vector2 newPosition = new Vector2(widthIndex, rowIndex);
-                currentColumnList.Add(CreateTile(
-                    emptyLayouts[random.Next(0, emptyLayouts.Count)], 
-                    newPosition));
+        for (int colI = 0; colI < MAP_WIDTH; colI++) {
+            for (int rowI = 0; rowI < MAP_HEIGHT; rowI++) {
+                Vector2 newPosition = new Vector2(colI * Subset.SIZE, rowI * Subset.SIZE);
+                Subset currSubset = null;
+                switch (random.Next(0, 4)) {
+                    case 0:
+                        currSubset = CreateSubset(roadLayouts[random.Next(0, roadLayouts.Count)],
+                            newPosition);
+                        break;
+                    case 1:
+                        currSubset = CreateSubset(lotLayouts[random.Next(0, lotLayouts.Count)],
+                            newPosition);
+                        break;
+                    case 2:
+                        currSubset = CreateSubset(obstacleLayouts[random.Next(0, obstacleLayouts.Count)],
+                            newPosition);
+                        break;
+                    case 3:
+                        currSubset = CreateSubset(targetLayouts[random.Next(0, targetLayouts.Count)],
+                            newPosition);
+                        break;
+                }
+                for (int innerColI = 0; innerColI < Subset.SIZE; innerColI++) {
+                    for (int innerRowI = 0; innerRowI < Subset.SIZE; innerRowI++) {
+                        grid[colI * Subset.SIZE + innerColI][rowI * Subset.SIZE + innerRowI] = currSubset.grid[innerColI][innerRowI];
+                    }
+                }
             }
         }
     }
 
-    public Tile CreateTile(TileData tile, Vector2 position) {
-        Vector3 objectPosition = new Vector3(position.x, 0, position.y);
-        GameObject tileObejct = Instantiate(tile.prefab, objectPosition, 
-            Quaternion.identity, tileSetObject.transform);
-        tileObejct.AddComponent<Tile>().InitTile(tile, position);
-        return tileObejct.GetComponent<Tile>();
+    private Subset CreateSubset(SubsetData subset, Vector2 rPos) {
+        Vector3 objectPosition = new Vector3(rPos.x, 0, rPos.y);
+        GameObject subsetObject = Instantiate(subset.prefab, objectPosition,
+            Quaternion.identity);
+        subsetObject.transform.SetParent(subsetSetObject.transform, false);
+        subsetObject.AddComponent<Subset>().initSubset(subset, rPos, random);
+        return subsetObject.GetComponent<Subset>();
     }
 
     // Update is called once per frame

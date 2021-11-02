@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb9128c62b4cf0d41bfcd1b82390c660, type: 3}
-  m_Name: EmptyTile
+  m_Name: TileObs
   m_EditorClassIdentifier: 
   prefab: {fileID: 6826343168142163144, guid: 8dd732abc35699f48b62312fc060005e, type: 3}
   isSpawnLocal: 1
-  tileType: 0
+  tileType: 1

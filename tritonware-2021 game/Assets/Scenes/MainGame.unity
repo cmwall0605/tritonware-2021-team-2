@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 221373456}
   m_Layer: 0
-  m_Name: TileSet
+  m_Name: SubsetSet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,7 +240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1532590b0b6aae14daecca18f34eec72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileLayouts:
-  - {fileID: 11400000, guid: 42f42c8d0cc7af34c8382c0fab9cfe27, type: 2}
-  tileSetObject: {fileID: 221373455}
+  subsetLayouts:
+  - {fileID: 11400000, guid: 74adb1e2e5eaafb40ad9e5e00912a8ef, type: 2}
+  - {fileID: 11400000, guid: bbd76f5f6c3592f4a9c7229f83bd028f, type: 2}
+  - {fileID: 11400000, guid: ec9d5500d893b1144a9d13652044af2a, type: 2}
+  - {fileID: 11400000, guid: 3be5119dafcf2b74f8add66de6fdba71, type: 2}
+  subsetSetObject: {fileID: 221373455}
   player: {fileID: 8503338947664113968, guid: 62f9d0c35927e2748baadaa7b29adf03, type: 3}

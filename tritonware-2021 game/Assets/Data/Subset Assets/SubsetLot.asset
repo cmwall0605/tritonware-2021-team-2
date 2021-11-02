@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 044025503f2100243bb7eec075bfa493, type: 3}
+  m_Name: SubsetLot
+  m_EditorClassIdentifier: 
+  tileLayouts:
+  - {fileID: 11400000, guid: 760b66026b67df146a58179e0eafd84c, type: 2}
+  - {fileID: 11400000, guid: ab600f31e3f554041808896b7c471d5a, type: 2}
+  - {fileID: 11400000, guid: 09a3cc4f4378cef4eaf14029f3f55529, type: 2}
+  tileGrid: 'EEE
+
+    EEE
+
+    EEE'
+  prefab: {fileID: 7691222331208353725, guid: ecbc47e63c260174d85173908a1a2619, type: 3}
+  isSpawnLocal: 0
+  subsetType: 0

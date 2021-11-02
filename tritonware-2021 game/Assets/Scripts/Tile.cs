@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour {
 
+    public const int SIZE = 3;
+
     public TileData tileData {
         get;
         private set;
     }
 
-    public Vector2 position
-    {
+    public Vector2 position {
         get;
         private set;
     }
