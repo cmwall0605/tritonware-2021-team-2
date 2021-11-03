@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 760b66026b67df146a58179e0eafd84c, type: 2}
   - {fileID: 11400000, guid: ab600f31e3f554041808896b7c471d5a, type: 2}
   - {fileID: 11400000, guid: 09a3cc4f4378cef4eaf14029f3f55529, type: 2}
-  tileGrid: 'EEE
+  tileGrid: 'OOO
 
     EEE
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,11 +23,19 @@ public class Subset : MonoBehaviour {
         private set;
     }
 
-    public void initSubset(SubsetData _subsetData, Vector2 _position, System.Random random) {
+    public int rotation
+    {
+        get;
+        private set;
+    }
+
+    public void initSubset(SubsetData _subsetData, Vector2 _position, System.Random random, int _rotation) {
 
         subsetData = _subsetData;
 
         position = _position;
+
+        rotation = _rotation;
 
         grid = new Tile[SIZE][];
 
@@ -90,8 +99,29 @@ public class Subset : MonoBehaviour {
         }
     }
 
+    private TileType[][] rotateGridOnce(TileType[][] tileGrid) {
+
+        TileType[][] rotateGrid = new TileType[SIZE][];
+
+        for (int i = 0; i < SIZE; i++) {
+            rotateGrid[i] = new TileType[SIZE];
+        }
+        rotateGrid[0][0] = tileGrid[0][2];
+        rotateGrid[0][1] = tileGrid[1][2];
+        rotateGrid[0][2] = tileGrid[2][2];
+        rotateGrid[1][0] = tileGrid[0][1];
+        rotateGrid[1][1] = tileGrid[1][1];
+        rotateGrid[1][2] = tileGrid[2][1];
+        rotateGrid[2][0] = tileGrid[0][0];
+        rotateGrid[2][1] = tileGrid[1][0];
+        rotateGrid[2][2] = tileGrid[2][0];
+
+        return rotateGrid;
+    }
+
     private TileType[][] processTileGrid(string stringTile) {
         string[] lines = stringTile.Split('\n');
+        Array.Reverse(lines);
         TileType[][] res = new TileType[SIZE][];
         for (int i = 0; i < SIZE; i++) {
             res[i] = new TileType[SIZE];
@@ -111,6 +141,10 @@ public class Subset : MonoBehaviour {
                 }
             }
         }
+        for (int i = 0; i < (rotation / 90) % 4; i++) {
+            res = rotateGridOnce(res);
+        }
+
         return res;
     }
 
@@ -118,7 +152,7 @@ public class Subset : MonoBehaviour {
     {
         Vector3 objectPosition = new Vector3(rPos.x, 0, rPos.y);
         GameObject tileObejct = Instantiate(tile.prefab, objectPosition,
-            Quaternion.identity);
+            Quaternion.Euler(0, rotation, 0));
         tileObejct.transform.SetParent(transform, false);
         tileObejct.AddComponent<Tile>().InitTile(tile, position);
         return tileObejct.GetComponent<Tile>();
